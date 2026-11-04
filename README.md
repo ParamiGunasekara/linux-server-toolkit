@@ -82,3 +82,12 @@ and may require sudo permissions.
 - Add configurable alert thresholds
 - Improve error handling
 - Add automated testing with GitHub Actions
+## Automated Disk Monitoring with Cron
+
+This project uses Cron to automatically monitor disk usage
+every 5 minutes.
+
+### Cron Schedule
+
+```text
+*/5 * * * *
