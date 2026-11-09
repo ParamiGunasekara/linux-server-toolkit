@@ -21,3 +21,7 @@ jobs:
             echo "Checking $script"
             bash -n "$script"
           done
+
+      - name: Run ShellCheck
+        run: |
+          shellcheck scripts/*.sh
