@@ -2,7 +2,7 @@
 
 echo "===== Disk Usage Alert ====="
 
-usage=$(df / | awk 'NR==2 {print $5}' | tr -d '%')
+usage=${DISK_USAGE_OVERRIDE:-$(df / | awk 'NR==2 {print $5}' | tr -d '%')}
 
 echo "Current Disk Usage: $usage%"
 
