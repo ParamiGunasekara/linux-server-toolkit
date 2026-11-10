@@ -1,4 +1,7 @@
 # Linux Server Management Toolkit
+
+[![Bash Script Checks](https://github.com/ParamiGunasekara/linux-server-toolkit/actions/workflows/bash-check.yml/badge.svg)](https://github.com/ParamiGunasekara/linux-server-toolkit/actions/workflows/bash-check.yml)
+
  This is my beginner DevOps project.
 
 ## Tools
@@ -17,12 +20,19 @@
 ## Project Structure
 
 ```text
+
 linux-server-toolkit/
-├── README.md
-└── scripts/
-    ├── server-monitor.sh
-    ├── disk-alert.sh
-    └── log-monitor.sh
+├── .github/
+│   └── workflows/
+│       └── bash-check.yml
+├── scripts/
+│   ├── server-monitor.sh
+│   ├── disk-alert.sh
+│   └── log-monitor.sh
+├── tests/
+│   └── test-server-monitor.sh
+├── .gitignore
+└── README.md
 ```
 
 ## Features
@@ -66,19 +76,41 @@ bash scripts/log-monitor.sh
 The log monitoring script reads `/var/log/syslog`
 and may require sudo permissions.
 
+### 4. Automated CI Pipeline
+
+This project uses GitHub Actions to automatically validate and test Bash scripts whenever code is pushed to the main branch or a pull request targets main.
+
+The CI pipeline includes:
+
+- Bash syntax validation using `bash -n`
+- Static code analysis using ShellCheck
+- Automated functional smoke testing of the server monitoring script
+- Automatic pass/fail reporting through GitHub Actions
+
+Workflow file: `.github/workflows/bash-check.yml`
+
+Test file: `tests/test-server-monitor.sh`
+
 ## Skills Practiced
 
 - Linux command-line operations
-- Bash scripting
+- Bash scripting and automation
 - Server health monitoring
 - Log analysis and troubleshooting
 - Git version control
 - GitHub and SSH authentication
+- GitHub Actions CI/CD
+- Bash syntax validation
+- ShellCheck static analysis
+- Automated functional smoke testing
+- CI pipeline debugging
 
 ## Future Improvements
 
-- Automate monitoring using cron
-- Save monitoring results to log files
 - Add configurable alert thresholds
-- Improve error handling
-- Add automated testing with GitHub Actions
+- Improve error handling in Bash scripts
+- Add automated tests for disk and log monitoring
+- Send alerts using email or Slack
+- Add Docker-based testing
+- Expand CI pipeline with additional quality checks
+
