@@ -29,3 +29,7 @@ jobs:
       - name: Run Server Monitor Test
         run: |
           bash tests/test-server-monitor.sh
+
+      - name: Run Disk Alert Tests
+        run: |
+          bash tests/test-disk-alert.sh
