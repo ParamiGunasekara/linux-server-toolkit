@@ -1,4 +1,3 @@
-
 #!/bin/bash
 echo "===== Linux Server Monitoring Report ====="
 
