@@ -15,12 +15,14 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      
       - name: Check Bash script syntax
         run: |
           for script in scripts/*.sh; do
             echo "Checking $script"
-            bash -n "$script"
+            bash -n "$script" || exit 1
           done
+
 
       - name: Run ShellCheck
         run: |
