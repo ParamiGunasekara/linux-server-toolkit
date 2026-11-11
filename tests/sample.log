@@ -1,0 +1,5 @@
+Nov 11 09:00:00 server INFO: System started
+Nov 11 09:01:00 server ERROR: Database connection failed
+Nov 11 09:02:00 server WARNING: Disk usage is high
+Nov 11 09:03:00 server INFO: Backup completed
+Nov 11 09:04:00 server ERROR: Network connection lost

@@ -35,3 +35,7 @@ jobs:
       - name: Run Disk Alert Tests
         run: |
           bash tests/test-disk-alert.sh
+
+      - name: Run Log Monitor Tests
+        run: |
+          bash tests/test-log-monitor.sh
