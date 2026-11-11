@@ -19,18 +19,23 @@
 
 ## Project Structure
 
-```text
 
+```text
 linux-server-toolkit/
 ├── .github/
 │   └── workflows/
 │       └── bash-check.yml
+├── docs/
+│   └── linux-commands.md
 ├── scripts/
 │   ├── server-monitor.sh
 │   ├── disk-alert.sh
 │   └── log-monitor.sh
 ├── tests/
-│   └── test-server-monitor.sh
+│   ├── sample.log
+│   ├── test-server-monitor.sh
+│   ├── test-disk-alert.sh
+│   └── test-log-monitor.sh
 ├── .gitignore
 └── README.md
 ```
@@ -76,20 +81,33 @@ bash scripts/log-monitor.sh
 The log monitoring script reads `/var/log/syslog`
 and may require sudo permissions.
 
+
 ### 4. Automated CI Pipeline
 
-This project uses GitHub Actions to automatically validate and test Bash scripts whenever code is pushed to the main branch or a pull request targets main.
+This project uses GitHub Actions to automatically validate and test Bash scripts whenever code is pushed to `main` or a pull request targets `main`.
 
 The CI pipeline includes:
 
 - Bash syntax validation using `bash -n`
 - Static code analysis using ShellCheck
-- Automated functional smoke testing of the server monitoring script
+- Automated Server Monitor Test
+- Automated Disk Alert Tests
+- Automated Log Monitor Test
 - Automatic pass/fail reporting through GitHub Actions
 
 Workflow file: `.github/workflows/bash-check.yml`
 
-Test file: `tests/test-server-monitor.sh`
+### Automated Tests
+
+Run all tests locally:
+
+```bash
+bash tests/test-server-monitor.sh
+bash tests/test-disk-alert.sh
+bash tests/test-log-monitor.sh
+```
+
+The Log Monitor Test uses `tests/sample.log` to simulate system logs without requiring administrator permissions.
 
 ## Skills Practiced
 
@@ -105,22 +123,65 @@ Test file: `tests/test-server-monitor.sh`
 - Automated functional smoke testing
 - CI pipeline debugging
 
+
 ## Future Improvements
 
 - Add configurable alert thresholds
 - Improve error handling in Bash scripts
-- Add automated test for disk and log monitoring
 - Send alerts using email or Slack
 - Add Docker-based testing
 - Expand CI pipeline with additional quality checks
 
+
 ## Automated Disk Monitoring with Cron
 
-This project uses Cron to automatically monitor disk usage
-every 5 minutes.
+Cron is used to run the disk monitoring script automatically every 5 minutes on Ubuntu Linux.
 
-### Cron Schedule
+### Configure Cron
 
-```text
-*/5 * * * *
+Open the user crontab:
+
+```bash
+crontab -e
 ```
+
+Add the following scheduled job:
+
+```cron
+*/5 * * * * /bin/bash /home/parami/linux-server-toolkit/scripts/disk-alert.sh >> /home/parami/linux-server-toolkit/logs/disk-monitor.log 2>&1
+```
+
+Create the log directory before using this job:
+
+```bash
+mkdir -p logs
+```
+
+The schedule `*/5 * * * *` runs every 5 minutes.
+
+### Verify Cron
+
+Check the Cron service:
+
+```bash
+systemctl status cron
+```
+
+View the monitoring results:
+
+```bash
+tail -n 10 logs/disk-monitor.log
+```
+
+Check Cron execution history:
+
+```bash
+sudo grep "disk-alert.sh" /var/log/syslog | tail -n 5
+```
+
+### Important Notes
+
+- Cron runs only while the Ubuntu VM is running and the Cron service is active.
+- Monitoring output is appended to `logs/disk-monitor.log`.
+- Generated log files are excluded from Git using `.gitignore`.
+- Update the absolute paths in the Cron job when using a different username or project location.
